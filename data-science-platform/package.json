@@ -1,0 +1,27 @@
+{
+  "name": "data-science-platform",
+  "version": "1.0.0",
+  "description": "A platform for data science learning and skill tracking.",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "build": "cd frontend && npm install && npm run build",
+    "client": "cd frontend && npm start",
+    "server": "node backend/server.js",
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.9",
+    "jsonwebtoken": "^8.5.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
