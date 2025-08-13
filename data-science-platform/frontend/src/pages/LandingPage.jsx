@@ -41,7 +41,8 @@ const LandingPage = () => {
         <motion.div className="hero-content" initial="hidden" animate="visible" variants={containerVariants}>
           <motion.div className="eyebrow" variants={itemVariants}>Become Job-Ready</motion.div>
           <motion.h1 className="hero-title" variants={itemVariants}>
-            Master Data Science with a Guided, Interactive Roadmap
+
+<h1 className="hero-title">Unlock Your Data Science Journey</h1>
           </motion.h1>
           <motion.p className="hero-subtitle" variants={itemVariants}>
             Learn the right skills, in the right order. Track progress, practice with hands‑on projects, and land your dream role.
