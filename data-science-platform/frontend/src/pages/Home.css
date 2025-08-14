@@ -1,7 +1,20 @@
+:root{
+  --text-color: #1e293b;
+  --muted: #64748b;
+  --accent-1: #6366f1;
+  --accent-2: #8b5cf6;
+  --accent-3: #06b6d4;
+  --bg-100: #f8fafc;
+  --bg-200: #f1f5f9;
+  --card-border: rgba(224,231,255,0.5);
+  --card-shadow-accent: rgba(99,102,241,0.08);
+  --glass: rgba(255,255,255,0.2);
+}
+
 /* Base Styles */
 .home-container {
   font-family: 'Inter', sans-serif;
-  color: #1e293b;
+  color: var(--text-color);
   overflow-x: hidden;
 }
 
@@ -19,7 +32,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  background: linear-gradient(135deg, var(--bg-100) 0%, var(--bg-200) 100%);
 }
 
 .gradient-circle {
@@ -28,12 +41,13 @@
   filter: blur(80px);
   opacity: 0.4;
   animation: float 15s infinite ease-in-out;
+  will-change: transform;
 }
 
 .gradient-circle.blue {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+  background: radial-gradient(circle, var(--accent-1) 0%, transparent 70%);
   top: -200px;
   left: -200px;
   animation-delay: 0s;
@@ -42,7 +56,7 @@
 .gradient-circle.teal {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+  background: radial-gradient(circle, var(--accent-3) 0%, transparent 70%);
   bottom: -150px;
   right: -100px;
   animation-delay: 2s;
@@ -51,7 +65,7 @@
 .gradient-circle.purple {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, #a78bfa 0%, transparent 70%);
+  background: radial-gradient(circle, var(--accent-2) 0%, transparent 70%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -87,18 +101,18 @@
 .badge {
   display: inline-flex;
   align-items: center;
-  background: rgba(99, 102, 241, 0.1);
-  color: #4f46e5;
+  background: rgba(99, 102, 241, 0.08);
+  color: var(--accent-1);
   padding: 0.5rem 0.8rem;
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.12);
 }
 
 .badge span {
-  background: #4f46e5;
+  background: var(--accent-1);
   color: white;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
@@ -116,7 +130,7 @@
 }
 
 .hero-title span {
-  background: linear-gradient(90deg, #4f46e5, #8b5cf6);
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -130,7 +144,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, #4f46e5, #8b5cf6);
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
   border-radius: 3px;
 }
 
@@ -146,6 +160,7 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 3rem;
+  flex-wrap: wrap;
 }
 
 .primary-button {
@@ -154,7 +169,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-1));
   color: white;
   border: none;
   box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
@@ -176,7 +191,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   background: white;
-  color: #4f46e5;
+  color: var(--accent-1);
   border: 1px solid #e0e7ff;
   display: inline-flex;
   align-items: center;
@@ -203,7 +218,7 @@
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border: 1px solid #f1f5f9;
+  border: 1px solid var(--bg-200);
   width: 100%;
   max-width: 400px;
 }
@@ -216,6 +231,7 @@
   margin-bottom: 1rem;
 }
 
+/* Provide sensible default backgrounds for chart bars */
 .chart-bar {
   flex: 1;
   border-radius: 8px 8px 0 0;
@@ -223,8 +239,10 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  height: 40%; /* default height (adjust via inline style or JS to reflect data) */
 }
 
+/* Gradient overlays for shine */
 .chart-bar::after {
   content: '';
   position: absolute;
@@ -232,7 +250,19 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent);
+  pointer-events: none;
+}
+
+/* Example distinct bar colors if you don't set them inline */
+.chart-bar:nth-child(1) { background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%); }
+.chart-bar:nth-child(2) { background: linear-gradient(180deg, #34d399 0%, #10b981 100%); }
+.chart-bar:nth-child(3) { background: linear-gradient(180deg, #f97316 0%, #ef4444 100%); }
+.chart-bar:nth-child(4) { background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%); }
+
+.chart-bar:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(2,6,23,0.08);
 }
 
 .chart-labels {
@@ -244,14 +274,13 @@
 .chart-labels span {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--muted);
 }
 
 /* Enhanced Features Section */
-/* Enhanced Features Section - 4 cards in a row */
 .features-section {
   padding: 6rem 2rem;
-  background: linear-gradient(to bottom, #f1f5f9 0%, #f8fafc 100%);
+  background: linear-gradient(to bottom, var(--bg-200) 0%, var(--bg-100) 100%);
   position: relative;
   overflow: hidden;
 }
@@ -292,13 +321,13 @@
   transform: translateX(-50%);
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #4f46e5, #8b5cf6);
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
   border-radius: 2px;
 }
 
 .features-section .section-subtitle {
   text-align: center;
-  color: #64748b;
+  color: var(--muted);
   font-size: 1.1rem;
   max-width: 700px;
   margin: 0 auto 4rem;
@@ -315,10 +344,10 @@
   background: white;
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.08);
+  box-shadow: 0 8px 25px var(--card-shadow-accent);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: default;
-  border: 1px solid rgba(224, 231, 255, 0.5);
+  border: 1px solid var(--card-border);
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -332,7 +361,7 @@
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
   transition: height 0.3s ease;
 }
 
@@ -351,8 +380,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(165, 180, 252, 0.2) 100%);
-  color: #4f46e5;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(165, 180, 252, 0.12) 100%);
+  color: var(--accent-1);
   border-radius: 12px;
   margin-bottom: 1.5rem;
   font-size: 1.5rem;
@@ -360,7 +389,7 @@
 }
 
 .feature-card:hover .feature-icon {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
   color: white;
   transform: rotate(5deg) scale(1.1);
 }
@@ -381,7 +410,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
   border-radius: 2px;
   transition: width 0.3s ease;
 }
@@ -391,17 +420,16 @@
 }
 
 .feature-card p {
-  color: #64748b;
+  color: var(--muted);
   font-size: 1rem;
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
 
-/* Enhanced Roles Section with Data Science Focus */
 /* Roles Section */
 .roles-section {
   padding: 6rem 2rem;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  background: linear-gradient(135deg, var(--bg-100) 0%, var(--bg-200) 100%);
   position: relative;
   overflow: hidden;
 }
@@ -413,7 +441,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%236366f1' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2' fill='%236366f1' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
   z-index: 0;
 }
 
@@ -441,13 +469,13 @@
   transform: translateX(-50%);
   width: 100px;
   height: 4px;
-  background: linear-gradient(90deg, #4f46e5, #8b5cf6);
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
   border-radius: 2px;
 }
 
 .section-subtitle {
   text-align: center;
-  color: #64748b;
+  color: var(--muted);
   font-size: 1.1rem;
   max-width: 700px;
   margin: 0 auto 4rem;
@@ -473,6 +501,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 360px; /* ensures consistent card height so footer aligns */
   border: 1px solid rgba(226, 232, 240, 0.6);
 }
 
@@ -483,12 +512,13 @@
 }
 
 /* Role Header */
+/* Expectation: set a custom property on each .role-card for --role-gradient and --role-color */
 .role-header {
-  height: 160px;
-  padding: 1.5rem;
+  height: 140px; /* slightly reduced to give more vertical space to content */
+  padding: 1.25rem;
   position: relative;
   overflow: hidden;
-  background: var(--role-gradient);
+  background: var(--role-gradient, linear-gradient(135deg, rgba(99,102,241,0.9), rgba(139,92,246,0.85)));
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -501,13 +531,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.2) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.12) 100%);
+  pointer-events: none;
 }
 
 .role-icon {
   width: 56px;
   height: 56px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--glass);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -516,27 +547,31 @@
   font-size: 1.75rem;
   margin-bottom: 1rem;
   backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
+/* Reduced title size so it doesn't overpower card */
 .role-title {
-  font-size: 1.5rem;
+  font-size: 1.6rem; /* reduced — was very large in screenshot */
   font-weight: 700;
   color: white;
   margin-bottom: 0.25rem;
   position: relative;
   z-index: 1;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  line-height: 1.06;
+  word-break: break-word;
 }
 
+/* category/subtitle within header */
 .role-category {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.78rem; /* slightly smaller */
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.92);
   position: relative;
   z-index: 1;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 /* Role Content */
@@ -545,13 +580,15 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* ensures footer stays at bottom */
 }
 
+/* Description: give more bottom spacing to separate from button */
 .role-description {
-  color: #64748b;
-  font-size: 0.95rem;
+  color:black;
+  font-size: 0.97rem; /* slightly adjusted */
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.25rem 0; /* more breathing room before button */
   flex-grow: 1;
 }
 
@@ -562,21 +599,23 @@
   justify-content: center;
   padding: 0.75rem 1.5rem;
   background: white;
-  color: var(--role-color);
-  border: 1px solid var(--role-color);
+  color: var(--role-color, var(--accent-1));
+  border: 1px solid var(--role-color, var(--accent-1));
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: auto;
+  transition: all 0.28s ease;
+  margin-top: 0.5rem; /* ensures separation from description */
+  align-self: flex-start; /* keep button left aligned consistent with design */
+  box-shadow: 0 8px 18px rgba(2,6,23,0.04);
 }
 
 .view-details-btn:hover {
-  background: var(--role-color);
+  background: var(--role-color, var(--accent-1));
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(2,6,23,0.08);
 }
 
 .view-details-btn::after {
@@ -596,7 +635,7 @@
 }
 
 .section-footer p {
-  color: #64748b;
+  color: var(--muted);
   margin-bottom: 1.5rem;
 }
 
@@ -605,8 +644,8 @@
   padding: 0.75rem 1.75rem;
   border-radius: 8px;
   background: transparent;
-  border: 2px solid #4f46e5;
-  color: #4f46e5;
+  border: 2px solid var(--accent-1);
+  color: var(--accent-1);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -615,7 +654,7 @@
 }
 
 .outline-button:hover {
-  background: rgba(79, 70, 229, 0.1);
+  background: rgba(79, 70, 229, 0.08);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(79, 70, 229, 0.1);
 }
@@ -625,25 +664,62 @@
   .roles-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .hero-content-container {
+    gap: 2rem;
+  }
 }
 
 @media (max-width: 900px) {
   .roles-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-content-container {
+    grid-template-columns: 1fr;
+    padding: 3rem 0;
+  }
+
+  /* scale headers a bit */
+  .role-title { font-size: 1.45rem; }
+  .role-header { height: 130px; padding: 1rem; }
 }
 
 @media (max-width: 600px) {
   .roles-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .section-title {
     font-size: 2.25rem;
   }
-  
+
   .section-subtitle {
     font-size: 1rem;
     margin-bottom: 3rem;
   }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  .role-title { font-size: 1.35rem; }
+  .role-header { height: 120px; padding: 0.9rem; }
+  .role-description { margin-bottom: 1rem; }
+}
+
+/* === FORCE job role description text to pure black ===
+   Place this at the VERY END of your CSS file so it overrides other rules
+*/
+.role-card .role-description,
+.role-card .role-description * {
+  color: #000 !important;
 }

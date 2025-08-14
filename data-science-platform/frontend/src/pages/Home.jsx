@@ -30,7 +30,7 @@ const Home = () => {
   };
 
   const goToRole = (role) => {
-    history.push(`/role/${role.slug}`);
+    history.push(`/skills/${role.slug}`);
   };
 
   const dsRoles = [

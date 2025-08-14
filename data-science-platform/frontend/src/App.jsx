@@ -46,7 +46,7 @@ const App = () => {
                 <Route path="/roles/:id/roadmap" component={RoleDetails} />
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/roadmap" component={Roadmap} />
-                <Route path="/skills/:id" component={SkillPage} />
+                <Route path="/skills/:roleSlug" component={SkillPage} />
               </Switch>
             </Frame>
           )}
