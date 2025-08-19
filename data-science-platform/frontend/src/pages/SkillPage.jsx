@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import roleSkillsData from '../utils/roleSkillsData';
 import './SkillPage.css';
@@ -73,6 +73,10 @@ const SkillPage = () => {
     }
   };
 
+  const handleStartLearningPath = () => {
+    history.push(`/roadmap/${roleSlug}`);
+  };
+
   return (
     <div 
       className="skill-page"
@@ -81,29 +85,14 @@ const SkillPage = () => {
         '--role-gradient': roleData.gradient
       }}
     >
-      {/* Header Section */}
+      {/* Compact Header Section */}
       <motion.div 
         className="skill-header"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="skill-header-background">
-          <div className="gradient-overlay"></div>
-        </div>
-        
         <div className="skill-header-content">
-          <button 
-            className="back-button"
-            onClick={() => history.goBack()}
-            aria-label="Go back"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Back
-          </button>
-          
           <div className="role-info">
             <div className="role-icon-large">{roleData.icon}</div>
             <div className="role-details">
@@ -225,48 +214,62 @@ const SkillPage = () => {
           </motion.div>
         </div>
 
-        {/* Skills Summary */}
+        {/* Bottom Section with Back Button and Summary */}
         <motion.div 
-          className="skills-summary"
+          className="bottom-section"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <div className="summary-content">
-            <h3>Skills Summary</h3>
-            <div className="summary-stats">
-              <div className="stat-item">
-                <span className="stat-number">
-                  {Object.values(roleData.skills).flat().length}
-                </span>
-                <span className="stat-label">Total Skills</span>
+          <div className="skills-summary">
+            <div className="summary-content">
+              <h3>Skills Summary</h3>
+              <div className="summary-stats">
+                <div className="stat-item">
+                  <span className="stat-number">
+                    {Object.values(roleData.skills).flat().length}
+                  </span>
+                  <span className="stat-label">Total Skills</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-number">
+                    {Object.values(roleData.skills).flat().filter(s => s.importance === 'Essential').length}
+                  </span>
+                  <span className="stat-label">Essential Skills</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-number">
+                    {Object.values(roleData.skills).flat().filter(s => s.level === 'Advanced').length}
+                  </span>
+                  <span className="stat-label">Advanced Level</span>
+                </div>
               </div>
-              <div className="stat-item">
-                <span className="stat-number">
-                  {Object.values(roleData.skills).flat().filter(s => s.importance === 'Essential').length}
-                </span>
-                <span className="stat-label">Essential Skills</span>
+              
+              <div className="action-buttons">
+                <button 
+                  className="primary-action-btn"
+                  style={{ background: roleData.gradient }}
+                  onClick={handleStartLearningPath}
+                >
+                  Start Learning Path
+                </button>
+                <button className="secondary-action-btn">
+                  Download Skills List
+                </button>
               </div>
-              <div className="stat-item">
-                <span className="stat-number">
-                  {Object.values(roleData.skills).flat().filter(s => s.level === 'Advanced').length}
-                </span>
-                <span className="stat-label">Advanced Level</span>
-              </div>
-            </div>
-            
-            <div className="action-buttons">
-              <button 
-                className="primary-action-btn"
-                style={{ background: roleData.gradient }}
-              >
-                Start Learning Path
-              </button>
-              <button className="secondary-action-btn">
-                Download Skills List
-              </button>
             </div>
           </div>
+
+          <button 
+            className="back-button bottom-back-button"
+            onClick={() => history.goBack()}
+            aria-label="Go back"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Back to Roles
+          </button>
         </motion.div>
       </div>
     </div>

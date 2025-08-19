@@ -1,12 +1,14 @@
 {
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "canvas-confetti": "^1.9.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "framer-motion": "^12.23.12",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.17.1"
+    "mongoose": "^8.17.1",
+    "react-router-dom": "^5.3.4"
   },
   "name": "ourproject",
   "version": "1.0.0",

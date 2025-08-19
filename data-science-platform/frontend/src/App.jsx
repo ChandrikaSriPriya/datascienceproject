@@ -1,24 +1,35 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
-import LandingNavbar from './components/LandingNavbar';
-import HomeNavbar from './components/HomeNavbar';
-import LandingFooter from './components/LandingFooter';
-import HomeFooter from './components/HomeFooter';
-import LandingPage from './pages/LandingPage';
-import Home from './pages/Home';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import RoleDetails from './pages/RoleDetails';
-import RoleOverview from './pages/RoleOverview';
-import Dashboard from './pages/Dashboard';
-import Roadmap from './pages/Roadmap';
-import SkillPage from './pages/SkillPage';
-import './styles/global.css';
+// src/App.jsx
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+  Redirect,
+} from "react-router-dom";
 
+import LandingNavbar from "./components/LandingNavbar";
+import HomeNavbar from "./components/HomeNavbar";
+import LandingFooter from "./components/LandingFooter";
+import HomeFooter from "./components/HomeFooter";
+
+import LandingPage from "./pages/LandingPage";
+import Home from "./pages/Home";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import RoleDetails from "./pages/RoleDetails";
+import RoleOverview from "./pages/RoleOverview";
+import Dashboard from "./pages/Dashboard";
+import Roadmap from "./pages/Roadmap";
+import SkillPage from "./pages/SkillPage";
+
+import "./styles/global.css";
+
+// Frame must be inside a Router to use useLocation
 const Frame = ({ children }) => {
-  const location = useLocation();
-  const path = location.pathname;
-  const isLanding = path === '/' || path === '/signin' || path === '/signup';
+  const { pathname } = useLocation();
+  const isLanding =
+    pathname === "/" || pathname === "/signin" || pathname === "/signup";
 
   return (
     <>
@@ -29,29 +40,37 @@ const Frame = ({ children }) => {
   );
 };
 
+const RoutesWithFrame = () => (
+  <Frame>
+    <Switch>
+      {/* Landing & auth */}
+      <Route path="/" exact component={LandingPage} />
+      <Route path="/signin" exact component={SignIn} />
+      <Route path="/signup" exact component={SignUp} />
+
+      {/* App pages */}
+      <Route path="/home" exact component={Home} />
+      <Route path="/dashboard" exact component={Dashboard} />
+
+      {/* Roles */}
+      <Route path="/roles/:id" exact component={RoleOverview} />
+      <Route path="/roles/:id/roadmap" exact component={RoleDetails} />
+
+      {/* Skill and roadmap (frontend-only for now) */}
+      <Route path="/skills/:roleSlug" exact component={SkillPage} />
+      <Route path="/roadmap" exact component={Roadmap} />
+
+      {/* Fallback: redirect unknown routes to landing */}
+      <Redirect to="/" />
+    </Switch>
+  </Frame>
+);
+
 const App = () => {
   return (
     <Router>
-      <Switch>
-        <Route
-          render={() => (
-            <Frame>
-              <Switch>
-                <Route path="/" exact component={LandingPage} />
-                <Route path="/home" component={Home} />
-                <Route path="/signin" component={SignIn} />
-                <Route path="/signup" component={SignUp} />
-                {/* Updated role routes */}
-                <Route path="/roles/:id" exact component={RoleOverview} />
-                <Route path="/roles/:id/roadmap" component={RoleDetails} />
-                <Route path="/dashboard" component={Dashboard} />
-                <Route path="/roadmap" component={Roadmap} />
-                <Route path="/skills/:roleSlug" component={SkillPage} />
-              </Switch>
-            </Frame>
-          )}
-        />
-      </Switch>
+      {/* This single Route ensures Frame gets Router context */}
+      <Route component={RoutesWithFrame} />
     </Router>
   );
 };
