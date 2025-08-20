@@ -1,0 +1,89 @@
+/* Global Theme Variables */
+:root {
+  /* Light Theme Colors */
+  --text-color: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --border-color: rgba(224, 231, 255, 0.5);
+  --shadow-color: rgba(99, 102, 241, 0.08);
+  --card-bg: #ffffff;
+  --navbar-bg: rgba(255, 255, 255, 0.95);
+  
+  /* Accent Colors (same for both themes) */
+  --accent-1: #6366f1;
+  --accent-2: #8b5cf6;
+  --accent-3: #06b6d4;
+  --accent-success: #10b981;
+  --accent-warning: #f59e0b;
+  --accent-error: #ef4444;
+  
+  /* Component Specific */
+  --button-bg: var(--accent-1);
+  --button-hover: var(--accent-2);
+  --input-bg: var(--bg-primary);
+  --input-border: var(--border-color);
+  --progress-bg: var(--bg-tertiary);
+  --progress-fill: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+}
+
+/* Dark Theme Colors */
+.dark-theme {
+  --text-color: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --border-color: rgba(148, 163, 184, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --card-bg: #1e293b;
+  --navbar-bg: rgba(15, 23, 42, 0.95);
+  
+  /* Component Specific Dark */
+  --input-bg: var(--bg-secondary);
+  --input-border: var(--border-color);
+  --progress-bg: var(--bg-tertiary);
+}
+
+/* Global Styles */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body {
+  background-color: var(--bg-secondary);
+  color: var(--text-color);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-2);
+}
+
+/* Selection Styling */
+::selection {
+  background: var(--accent-1);
+  color: white;
+}
+
+/* Focus Styles */
+*:focus-visible {
+  outline: 2px solid var(--accent-1);
+  outline-offset: 2px;
+}

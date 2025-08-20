@@ -8,6 +8,7 @@ import {
   Redirect,
 } from "react-router-dom";
 
+import { ThemeProvider } from "./contexts/ThemeContext";
 import LandingNavbar from "./components/LandingNavbar";
 import HomeNavbar from "./components/HomeNavbar";
 import LandingFooter from "./components/LandingFooter";
@@ -22,8 +23,10 @@ import RoleOverview from "./pages/RoleOverview";
 import Dashboard from "./pages/Dashboard";
 import Roadmap from "./pages/Roadmap";
 import SkillPage from "./pages/SkillPage";
+import CareerAssessment from "./pages/CareerAssessment";
 
 import "./styles/global.css";
+import "./styles/theme.css";
 
 // Frame must be inside a Router to use useLocation
 const Frame = ({ children }) => {
@@ -51,6 +54,7 @@ const RoutesWithFrame = () => (
       {/* App pages */}
       <Route path="/home" exact component={Home} />
       <Route path="/dashboard" exact component={Dashboard} />
+      <Route path="/career-assessment" exact component={CareerAssessment} />
 
       {/* Roles */}
       <Route path="/roles/:id" exact component={RoleOverview} />
@@ -58,6 +62,7 @@ const RoutesWithFrame = () => (
 
       {/* Skill and roadmap (frontend-only for now) */}
       <Route path="/skills/:roleSlug" exact component={SkillPage} />
+      <Route path="/roadmap/:roleSlug" exact component={Roadmap} />
       <Route path="/roadmap" exact component={Roadmap} />
 
       {/* Fallback: redirect unknown routes to landing */}
@@ -68,10 +73,12 @@ const RoutesWithFrame = () => (
 
 const App = () => {
   return (
-    <Router>
-      {/* This single Route ensures Frame gets Router context */}
-      <Route component={RoutesWithFrame} />
-    </Router>
+    <ThemeProvider>
+      <Router>
+        {/* This single Route ensures Frame gets Router context */}
+        <Route component={RoutesWithFrame} />
+      </Router>
+    </ThemeProvider>
   );
 };
 

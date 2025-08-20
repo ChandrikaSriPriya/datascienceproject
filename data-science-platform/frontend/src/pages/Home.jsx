@@ -344,7 +344,12 @@ const Home = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <p>Not sure which career path is right for you?</p>
-            <button className="outline-button">Take Career Assessment</button>
+            <button 
+              className="outline-button"
+              onClick={() => history.push('/career-assessment')}
+            >
+              Take Career Assessment
+            </button>
           </motion.div>
         </div>
       </section>

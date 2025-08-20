@@ -26,6 +26,7 @@ const HomeNavbar = () => {
         <div className="nav-center">
           <ul className="navbar-links">
             <li><Link to="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</Link></li>
+            <li><Link to="/career-assessment" onClick={() => setIsOpen(false)}>Career Assessment</Link></li>
             <li><Link to="/roadmap" onClick={() => setIsOpen(false)}>Learning Paths</Link></li>
             <li><Link to="/projects" onClick={() => setIsOpen(false)}>Projects</Link></li>
             <li><Link to="/resources" onClick={() => setIsOpen(false)}>Resources</Link></li>
@@ -55,6 +56,7 @@ const HomeNavbar = () => {
       <div className={`mobile-menu ${isOpen ? 'open' : ''}`}>
         <ul>
           <li><Link to="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</Link></li>
+          <li><Link to="/career-assessment" onClick={() => setIsOpen(false)}>Career Assessment</Link></li>
           <li><Link to="/roadmap" onClick={() => setIsOpen(false)}>Learning Paths</Link></li>
           <li><Link to="/projects" onClick={() => setIsOpen(false)}>Projects</Link></li>
           <li><Link to="/resources" onClick={() => setIsOpen(false)}>Resources</Link></li>
