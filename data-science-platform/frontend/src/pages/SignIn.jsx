@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { authAPI, setAuthToken, setUser } from '../utils/auth';
 import '../styles/Signin.css';
 
 const SignIn = () => {
@@ -40,16 +40,37 @@ const SignIn = () => {
         setError('');
         
         try {
-            if (process.env.REACT_APP_API_URL) {
-                const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, { email, password });
-                localStorage.setItem('token', response.data.token);
-            }
-            history.push('/home');
-        } catch (err) {
-            setError(err.response?.data?.message || 'An error occurred. Please try again.');
-            setTimeout(() => {
+            const response = await authAPI.login({ email, password });
+            
+            if (response.success) {
+                // Store token and user data
+                setAuthToken(response.token);
+                setUser(response.user);
+                
+                // Redirect to home page
                 history.push('/home');
-            }, 1500);
+            } else {
+                setError(response.message || 'Invalid email or password');
+            }
+        } catch (err) {
+            console.error('Login error:', err);
+            let errorMessage = 'Invalid email or password';
+            
+            if (err.response) {
+                // Server responded with error status
+                if (err.response.status === 401) {
+                    errorMessage = 'Invalid email or password';
+                } else if (err.response.status === 400) {
+                    errorMessage = err.response.data?.message || 'Invalid email or password';
+                } else {
+                    errorMessage = 'Login failed. Please try again.';
+                }
+            } else if (err.request) {
+                // Network error
+                errorMessage = 'Network error. Please check your connection.';
+            }
+            
+            setError(errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -70,10 +91,6 @@ const SignIn = () => {
                 variants={containerVariants}
             >
                 <motion.div variants={itemVariants} className="signin-header">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" className="signin-icon">
-                        <circle cx="12" cy="12" r="10" stroke="#6366f1" strokeWidth="2" />
-                        <path d="M12 16V12M12 8H12.01" stroke="#6366f1" strokeWidth="2" strokeLinecap="round"/>
-                    </svg>
                     <h1>Welcome Back</h1>
                     <p>Sign in to continue your data science journey</p>
                 </motion.div>
@@ -85,6 +102,16 @@ const SignIn = () => {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0 }}
+                        style={{
+                            backgroundColor: '#fee2e2',
+                            color: '#dc2626',
+                            padding: '12px 16px',
+                            borderRadius: '8px',
+                            marginBottom: '20px',
+                            border: '1px solid #fecaca',
+                            fontSize: '14px',
+                            textAlign: 'center'
+                        }}
                     >
                         {error}
                     </motion.div>
@@ -127,11 +154,7 @@ const SignIn = () => {
                         whileTap={{ scale: 0.98 }}
                         disabled={isLoading}
                     >
-                        {isLoading ? (
-                            <span className="loading-spinner"></span>
-                        ) : (
-                            'Sign In'
-                        )}
+                        {isLoading ? 'Signing In...' : 'Sign In'}
                     </motion.button>
                 </form>
 

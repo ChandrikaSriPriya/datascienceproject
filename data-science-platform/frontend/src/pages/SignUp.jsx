@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { authAPI } from '../utils/auth';
 import '../styles/Signup.css';
 
 const SignUp = () => {
@@ -17,16 +17,31 @@ const SignUp = () => {
         setIsLoading(true);
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+            const response = await authAPI.register({
                 username,
                 email,
                 password,
             });
-            if (response.data.success) {
+            
+            if (response.success) {
+                // Registration successful, redirect to sign in
                 history.push('/signin');
+            } else {
+                setError(response.message || 'Registration failed');
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'Registration failed');
+            console.error('Registration error:', err);
+            let errorMessage = 'Registration failed. Please try again.';
+            
+            if (err.response) {
+                // Server responded with error status
+                errorMessage = err.response.data?.message || 'Registration failed';
+            } else if (err.request) {
+                // Network error
+                errorMessage = 'Network error. Please check your connection.';
+            }
+            
+            setError(errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -41,14 +56,26 @@ const SignUp = () => {
             </div>
             <div className="signup-card">
                 <div className="signup-header">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" className="signup-icon">
-                        <circle cx="12" cy="12" r="10" stroke="#06b6d4" strokeWidth="2" />
-                        <path d="M12 16v-4M12 8h.01" stroke="#06b6d4" strokeWidth="2" strokeLinecap="round"/>
-                    </svg>
                     <h1>Create Account</h1>
                     <p>Start your data science journey with us</p>
                 </div>
-                {error && <div className="error-message">{error}</div>}
+                {error && (
+                    <div 
+                        className="error-message"
+                        style={{
+                            backgroundColor: '#fee2e2',
+                            color: '#dc2626',
+                            padding: '12px 16px',
+                            borderRadius: '8px',
+                            marginBottom: '20px',
+                            border: '1px solid #fecaca',
+                            fontSize: '14px',
+                            textAlign: 'center'
+                        }}
+                    >
+                        {error}
+                    </div>
+                )}
                 <form className="signup-form" onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label htmlFor="username">Username</label>
@@ -84,7 +111,7 @@ const SignUp = () => {
                         />
                     </div>
                     <button className="signup-button" type="submit" disabled={isLoading}>
-                        {isLoading ? <span className="loading-spinner"></span> : 'Register'}
+                        {isLoading ? 'Creating Account...' : 'Register'}
                     </button>
                 </form>
                 <div className="signup-footer">

@@ -1,154 +1,319 @@
-import { motion } from "framer-motion";
-import React from "react";
-import { Link } from "react-router-dom";
-import "./LandingPage.css";
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useHistory } from 'react-router-dom';
+import './LandingPage.css';
 
 const LandingPage = () => {
+  const [theme, setTheme] = useState('light');
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
+  };
+
+  useEffect(() => {
+    document.body.className = theme + '-theme';
+  }, [theme]);
+  
+  const history = useHistory();
+  
+  const handleStartLearning = () => {
+    history.push('/signup');
+  };
+  
+  const handleGetStarted = () => {
+    history.push('/signup');
+  };
+  
+  const handleSignIn = () => {
+    history.push('/signin');
+  };
+  
+  const handleSignUp = () => {
+    history.push('/signup');
+  };
+  
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 },
-    },
+    visible: { 
+      opacity: 1, 
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      } 
+    }
   };
-
+  
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.6 } },
+    visible: { 
+      y: 0, 
+      opacity: 1, 
+      transition: { 
+        duration: 0.6,
+        ease: [0.6, -0.05, 0.01, 0.99]
+      } 
+    }
   };
 
+  const features = [
+    {
+      icon: "📊",
+      title: "Interactive Learning",
+      description: "Hands-on projects and real-world datasets to practice with"
+    },
+    {
+      icon: "🎯",
+      title: "Personalized Paths",
+      description: "Customized learning journeys based on your goals"
+    },
+    {
+      icon: "🏆",
+      title: "Certification",
+      description: "Earn recognized certificates upon completion"
+    },
+    {
+      icon: "🤝",
+      title: "Community",
+      description: "Connect with peers and experts in our forums"
+    }
+  ];
+
   return (
-    <div className="landing-page">
-      <section className="landing-container" id="home">
-        <div className="background-shapes">
-          <motion.div
-            className="shape shape-blue"
-            animate={{ x: [0, 30, 0], y: [0, -20, 0], rotate: [0, 5, 0] }}
-            transition={{ duration: 15, repeat: Infinity, repeatType: "reverse" }}
-          />
-          <motion.div
-            className="shape shape-teal"
-            animate={{ x: [0, -25, 0], y: [0, 25, 0], rotate: [0, -3, 0] }}
-            transition={{ duration: 18, repeat: Infinity, repeatType: "reverse", delay: 3 }}
-          />
-          <motion.div
-            className="shape shape-purple"
-            animate={{ x: [0, 15, -10, 0], y: [0, 10, -10, 0], rotate: [0, 8, -4, 0] }}
-            transition={{ duration: 22, repeat: Infinity, repeatType: "reverse", delay: 1.5 }}
-          />
+    <div className={`landing-page ${theme}-theme`}>
+      {/* Navigation Bar */}
+      <nav className="navbar">
+        <div className="navbar-container">
+          {/* Logo */}
+          <div className="navbar-logo">
+            <div className="logo-container">
+              <div className="logo-icon">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                  <defs>
+                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#6366f1" />
+                      <stop offset="50%" stopColor="#8b5cf6" />
+                      <stop offset="100%" stopColor="#06b6d4" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="20" cy="20" r="18" fill="url(#logoGradient)" fillOpacity="0.1" stroke="url(#logoGradient)" strokeWidth="2"/>
+                  <path d="M12 16L20 24L28 16" stroke="url(#logoGradient)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="15" cy="12" r="2" fill="url(#logoGradient)"/>
+                  <circle cx="25" cy="12" r="2" fill="url(#logoGradient)"/>
+                  <circle cx="20" cy="28" r="2" fill="url(#logoGradient)"/>
+                  <path d="M8 20H12M28 20H32" stroke="url(#logoGradient)" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </div>
+              <div className="logo-text">
+                <span className="logo-name">PR LEARNINGS</span>
+                <span className="logo-tagline">Platform</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Navigation Buttons */}
+          <div className="navbar-buttons">
+            <button className="nav-button theme-toggle-btn" onClick={toggleTheme}>
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+            <button className="nav-button signin-btn" onClick={handleSignIn}>
+              Sign In
+            </button>
+            <button className="nav-button signup-btn" onClick={handleSignUp}>
+              Sign Up
+            </button>
+          </div>
         </div>
+      </nav>
 
-        <motion.div className="hero-content" initial="hidden" animate="visible" variants={containerVariants}>
-          <motion.div className="eyebrow" variants={itemVariants}>Become Job-Ready</motion.div>
-          <motion.h1 className="hero-title" variants={itemVariants}>
-
-<h1 className="hero-title">Unlock Your Data Science Journey</h1>
-          </motion.h1>
-          <motion.p className="hero-subtitle" variants={itemVariants}>
-            Learn the right skills, in the right order. Track progress, practice with hands‑on projects, and land your dream role.
-          </motion.p>
-
-          <motion.div className="button-group" variants={itemVariants}>
-            <Link className="btn btn-primary btn-animate" to="/signup" aria-label="Get Started">
-              Get Started
-            </Link>
-            <a className="btn btn-secondary" href="#features" aria-label="View Features">
-              View Features
-            </a>
+      {/* Hero Section - Unique Design */}
+      <section className="hero-section">
+        {/* Animated Background Elements */}
+        <div className="hero-background">
+          <div className="geometric-shapes">
+            <div className="shape shape-1"></div>
+            <div className="shape shape-2"></div>
+            <div className="shape shape-3"></div>
+            <div className="shape shape-4"></div>
+            <div className="shape shape-5"></div>
+          </div>
+          <div className="particle-system">
+            <div className="particle"></div>
+            <div className="particle"></div>
+            <div className="particle"></div>
+            <div className="particle"></div>
+            <div className="particle"></div>
+            <div className="particle"></div>
+            <div className="particle"></div>
+            <div className="particle"></div>
+          </div>
+        </div>
+        
+        <div className="hero-content-container">
+          <motion.div 
+            className="hero-content" 
+            initial="hidden" 
+            animate="visible" 
+            variants={containerVariants}
+          >
+            <motion.div variants={itemVariants} className="hero-badge">
+              <span className="badge-icon">🚀</span>
+              <span className="badge-text">Transform Your Career Today</span>
+            </motion.div>
+            
+            <motion.h1 variants={itemVariants} className="hero-title">
+              Master the Future of
+              <span className="gradient-text"> Data Science</span>
+            </motion.h1>
+            
+            <motion.p variants={itemVariants} className="hero-subtitle">
+              Join thousands of learners who have unlocked their potential in AI, Machine Learning, and Data Analytics. 
+              Start your journey from beginner to expert with our comprehensive learning platform.
+            </motion.p>
+            
+            <motion.div variants={itemVariants} className="hero-stats">
+              <div className="stat-item">
+                <span className="stat-number">50K+</span>
+                <span className="stat-label">Students</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">200+</span>
+                <span className="stat-label">Projects</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">95%</span>
+                <span className="stat-label">Success Rate</span>
+              </div>
+            </motion.div>
+            
+            <motion.div variants={itemVariants} className="hero-cta">
+              <button className="primary-button" onClick={handleStartLearning}>
+                <span>Start Learning Free</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              <button className="secondary-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M10 8L16 12L10 16V8Z" stroke="currentColor" strokeWidth="2"/>
+                </svg>
+                Watch Success Stories
+              </button>
+            </motion.div>
           </motion.div>
+          
+          <div className="hero-visual">
+            <div className="roadmap-container">
+              {/* Simple Roadmap Header */}
+              <div className="roadmap-header">
+                <h3>Your Learning Journey</h3>
+                <div className="journey-stats">
+                  <span>⏱️ 6 months</span>
+                  <span>📚 12 courses</span>
+                  <span>🎯 95% success</span>
+                </div>
+              </div>
 
-          <motion.div className="hero-stats" variants={itemVariants}>
-            <div>
-              <span className="stat-value">10k+</span>
-              <span className="stat-label">Learners</span>
-            </div>
-            <div>
-              <span className="stat-value">120+</span>
-              <span className="stat-label">Topics</span>
-            </div>
-            <div>
-              <span className="stat-value">40+</span>
-              <span className="stat-label">Projects</span>
-            </div>
-          </motion.div>
-        </motion.div>
-      </section>
+              {/* Clean Roadmap */}
+              <div className="roadmap-visual">
+                <div className="roadmap-path">
+                  <div className="path-step start-step">
+                    <div className="step-icon">🚀</div>
+                    <div className="step-content">
+                      <h4>Beginner</h4>
+                      <p>Start your journey</p>
+                    </div>
+                  </div>
+                  
+                  <div className="path-connector"></div>
+                  
+                  <div className="path-step">
+                    <div className="step-icon">📊</div>
+                    <div className="step-content">
+                      <h4>Data Analysis</h4>
+                      <p>Learn Python & SQL</p>
+                    </div>
+                  </div>
+                  
+                  <div className="path-connector"></div>
+                  
+                  <div className="path-step">
+                    <div className="step-icon">🧠</div>
+                    <div className="step-content">
+                      <h4>Machine Learning</h4>
+                      <p>Build ML models</p>
+                    </div>
+                  </div>
+                  
+                  <div className="path-connector"></div>
+                  
+                  <div className="path-step end-step">
+                    <div className="step-icon">🎯</div>
+                    <div className="step-content">
+                      <h4>Data Scientist</h4>
+                      <p>Land your dream job</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-      {/* About Section */}
-      <section id="about" className="lp-section about-section">
-        <div className="lp-container">
-          <h2>About the Platform</h2>
-          <p>
-            We help learners master data science with practical, curated paths. Progress tracking, hands‑on projects,
-            and community support keep you motivated from fundamentals to advanced topics.
-          </p>
+              {/* Current Progress */}
+              <div className="progress-section">
+                <div className="progress-header">
+                  <h4>Current Progress</h4>
+                  <span className="progress-percentage">25%</span>
+                </div>
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{width: '25%'}}></div>
+                </div>
+                <div className="current-course">
+                  <span className="course-badge">📚</span>
+                  <span className="course-name">Python Fundamentals</span>
+                  <span className="course-status">In Progress</span>
+                </div>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="quick-actions">
+                <button className="action-btn primary">
+                  <span>Continue Learning</span>
+                  <span>→</span>
+                </button>
+                <button className="action-btn secondary">
+                  <span>View Full Path</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="features-section">
-        <motion.div className="features" initial="hidden" animate="visible" variants={containerVariants}>
-          <motion.div className="feature-card" variants={itemVariants}>
-            <div className="feature-icon">📈</div>
-            <h3>Guided Learning</h3>
-            <p>Follow curated paths from fundamentals to advanced ML, without getting lost.</p>
-          </motion.div>
-          <motion.div className="feature-card" variants={itemVariants}>
-            <div className="feature-icon">🧪</div>
-            <h3>Hands‑on Projects</h3>
-            <p>Build a portfolio with real‑world datasets and industry‑style challenges.</p>
-          </motion.div>
-          <motion.div className="feature-card" variants={itemVariants}>
-            <div className="feature-icon">🎯</div>
-            <h3>Track Progress</h3>
-            <p>Stay motivated with milestones, streaks, and personalized recommendations.</p>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" className="lp-section pricing-section">
-        <div className="lp-container pricing-grid">
-          <div className="pricing-card">
-            <h3>Free</h3>
-            <p>Explore basics with limited access.</p>
-            <ul>
-              <li>Community access</li>
-              <li>Intro courses</li>
-              <li>Basic projects</li>
-            </ul>
-            <a href="#contact" className="btn btn-secondary">Get Started</a>
-          </div>
-          <div className="pricing-card popular">
-            <div className="badge">Popular</div>
-            <h3>Pro</h3>
-            <p>Full paths, projects, and certificates.</p>
-            <ul>
-              <li>All learning paths</li>
-              <li>Capstone projects</li>
-              <li>Completion certificates</li>
-            </ul>
-            <a href="#contact" className="btn btn-primary">Go Pro</a>
-          </div>
-          <div className="pricing-card">
-            <h3>Teams</h3>
-            <p>Upskill your team with analytics and ML.</p>
-            <ul>
-              <li>Team dashboards</li>
-              <li>Custom tracks</li>
-              <li>Dedicated support</li>
-            </ul>
-            <a href="#contact" className="btn btn-secondary">Contact Sales</a>
+      <section className="features-section">
+        <div className="section-container">
+          <h2 className="section-title">Why Learn With Us</h2>
+          <p className="section-subtitle">
+            We combine the best of structured education with practical applications
+          </p>
+          
+          <div className="features-grid">
+            {features.map((feature, index) => (
+              <div key={index} className="feature-card" role="region" aria-label={feature.title}>
+                <div className="feature-icon">{feature.icon}</div>
+                <h3 className="feature-title">{feature.title}</h3>
+                <p className="feature-description">{feature.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="lp-section contact-section">
-        <div className="lp-container contact-card">
-          <h2>Contact Us</h2>
-          <p>Have questions? Reach out and we’ll get back to you shortly.</p>
-          <a href="mailto:support@example.com" className="btn btn-primary">Email Support</a>
+      {/* CTA Section */}
+      <section className="cta-section">
+        <div className="section-container">
+          <h2>Ready to Start Your Data Science Journey?</h2>
+          <p>Join thousands of students who have transformed their careers with our platform.</p>
+          <button className="primary-button large" onClick={handleGetStarted}>Get Started Now</button>
         </div>
       </section>
     </div>
